@@ -43,13 +43,13 @@ RUN ROOT_VERSION=6.22.00 && \
     cd .. && \
     rm -rf  root_$ROOT_VERSION-build && \
     cd $CURRENT_PATH && \
-    rm -rf root-$ROOT_VERSION  
+    rm -rf root-$ROOT_VERSION && \
+    echo "source /root/root_$ROOT_VERSION-install/bin/thisroot.sh" >> ~/.bashrc 
 
-RUN echo "source /root/root_6.22.00-install/bin/thisroot.sh" >> ~/.bashrc
 
 ENV ROOTSYS="/root/root_6.22.00-install" 
 ENV LD_LIBRARY_PATH="${ROOTSYS}/lib:${LD_LIBRARY_PATH}" 
-ENV PYTHONPATH="${ROOTSYS}/lib:${PYTHONPATH}"
+#ENV PYTHONPATH="${ROOTSYS}/lib:${PYTHONPATH}"
 
 #make a copy of aanet
 COPY aanet-master.tar.gz .
