@@ -39,8 +39,22 @@ RUN ROOT_VERSION=6.22.00 && \
     cd root_$ROOT_VERSION-build && \
     cmake -DCMAKE_INSTALL_PREFIX=../root_$ROOT_VERSION-install -Dmathmore=ON -Droofit=ON -Dminuit2=ON -Dpyroot=ON -DPython3_EXECUTABLE=/usr/bin/python3.6 $CURRENT_PATH/root-$ROOT_VERSION && \
     #cmake -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -build . -target install -j1 && \
-    cmake --build . --target install -- -j9 && \
+    cmake --build . --target install -- -j10 && \
     cd .. && \
     rm -rf  root_$ROOT_VERSION-build && \
     cd $CURRENT_PATH && \
     rm -rf root-$ROOT_VERSION  
+
+RUN echo "source /root/root_6.22.00-install/bin/thisroot.sh" >> ~/.bashrc
+
+ENV ROOTSYS="/root/root_6.22.00-install" 
+ENV LD_LIBRARY_PATH="${ROOTSYS}/lib:${LD_LIBRARY_PATH}" 
+ENV PYTHONPATH="${ROOTSYS}/lib:${PYTHONPATH}"
+
+#make a copy of aanet
+COPY aanet-master.tar.gz .
+RUN tar -xvf aanet-master.tar.gz && \
+    rm -rf aanet-master.tar.gz
+ENV AADIR="/aanet-master"
+
+#RUN ["/bin/bash", "-c", "./aanet-master/make.py"]
