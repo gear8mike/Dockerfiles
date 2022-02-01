@@ -46,6 +46,8 @@ RUN apt-get install gfortran libpcre3-dev \
 
 RUN apt-get update -y && \
     apt-get install python -y 
+    
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 10
 
 USER ${NB_USER}
 
@@ -95,6 +97,7 @@ RUN /bin/bash -c "source ${ROOTSYS}/bin/thisroot.sh && \
     python3.6 ./make.py"
 
 RUN echo "source ${HOME}/aanet/setenv.sh" >> ~/.bashrc 
+
 
 
 
