@@ -2,6 +2,7 @@
 FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENTRYPOINT ["/bin/bash"]
 
 #settings for Mybinder
 ARG NB_USER=your_user
