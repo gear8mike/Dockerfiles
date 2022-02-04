@@ -2,7 +2,7 @@
 FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENTRYPOINT ["/bin/bash", "-l", "-c"]
+#ENTRYPOINT ["/bin/bash", "-l", "-c"]
 
 #settings for Mybinder
 ARG NB_USER=your_user
@@ -98,7 +98,9 @@ RUN /bin/bash -c "source ${ROOTSYS}/bin/thisroot.sh && \
     python3.6 ./make.py"
 
 RUN echo "source ${HOME}/aanet/setenv.sh" >> ~/.bashrc 
-
+#ENTRYPOINT ["/bin/bash", "-l"]
+RUN bash
+WORKDIR ${HOME}
 
 
 
