@@ -2,7 +2,7 @@
 FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
-#ENTRYPOINT ["/bin/bash", "-l", "-c"]
+ENV SHELL /bin/bash
 
 #settings for Mybinder
 ARG NB_USER=your_user
@@ -17,7 +17,7 @@ RUN adduser --disabled-password \
     ${NB_USER}
 
 #maybe copy is not necessary
-COPY . ${HOME}
+#COPY . ${HOME}
 USER root
 RUN chown -R ${NB_UID} ${HOME}
 ENV PATH=$PATH:${HOME}/.local/bin
@@ -56,8 +56,8 @@ RUN pip3 install --no-cache --upgrade pip && \
     pip install --no-cache-dir notebook jupyterlab && \
     pip install numpy matplotlib && \
     pip install --no-cache-dir jupyterhub
-
-ENV ROOT_VERSION=6.22.08
+#set the required ROOT version
+ARG ROOT_VERSION=6.22.08
 
 #installation of ROOT 
 RUN cd ${HOME} &&\
@@ -66,16 +66,12 @@ RUN cd ${HOME} &&\
     tar -xzvf root_v${ROOT_VERSION}.source.tar.gz && \
     rm root_v${ROOT_VERSION}.source.tar.gz && \
     CURRENT_PATH=`pwd` && \
-    #mkdir ~/root && \
-    #cd ~/ && \
     mkdir root_${ROOT_VERSION}-build root_${ROOT_VERSION}-install && \
     cd root_${ROOT_VERSION}-build && \
     cmake -DCMAKE_INSTALL_PREFIX=../root_${ROOT_VERSION}-install -Dmathmore=ON -Droofit=ON -Dminuit2=ON -Dpyroot=ON -DPython3_EXECUTABLE=/usr/bin/python3.6 -DPython2_EXECUTABLE=/usr/bin/python2.7 ${HOME}/root-${ROOT_VERSION} && \
-    #cmake -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -build . -target install -j1 && \
     cmake --build . --target install -- -j8 && \
     cd .. && \
     rm -rf  root_${ROOT_VERSION}-build && \
-    #cd $CURRENT_PATH && \
     rm -rf root-${ROOT_VERSION} && \
     echo "source ${HOME}/root_${ROOT_VERSION}-install/bin/thisroot.sh" >> ~/.bashrc 
 
@@ -88,6 +84,7 @@ ENV PYTHONPATH="${ROOTSYS}/lib:${PYTHONPATH}"
 
 #make a copy of aanet
 COPY aanet.tar.gz ${HOME}
+COPY notebook.ipynb ${HOME}
 RUN cd ${HOME} && \
     tar -xvf aanet.tar.gz && \
     rm -rf aanet.tar.gz
@@ -98,8 +95,7 @@ RUN /bin/bash -c "source ${ROOTSYS}/bin/thisroot.sh && \
     python3.6 ./make.py"
 
 RUN echo "source ${HOME}/aanet/setenv.sh" >> ~/.bashrc 
-#ENTRYPOINT ["/bin/bash", "-l"]
-RUN bash
+
 WORKDIR ${HOME}
 
 
