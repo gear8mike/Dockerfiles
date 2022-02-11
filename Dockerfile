@@ -1,4 +1,3 @@
-#installation of ROOT with python 3.6
 FROM ubuntu:latest
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -55,8 +54,10 @@ USER ${NB_USER}
 RUN pip3 install --no-cache --upgrade pip && \
     pip install --no-cache-dir notebook jupyterlab && \
     pip install numpy matplotlib && \
-    pip install --no-cache-dir jupyterhub
+    pip install --no-cache-dir jupyterhub && \
+    pip install jupyter metakernel ipykernel
 #set the required ROOT version
+#need to modify $ROOTSYS in kernek json file, if it is changed
 ARG ROOT_VERSION=6.22.08
 
 #installation of ROOT 
@@ -84,10 +85,12 @@ ENV PYTHONPATH="${ROOTSYS}/lib:${PYTHONPATH}"
 
 #make a copy of aanet
 COPY aanet.tar.gz ${HOME}
-COPY notebook.ipynb ${HOME}
 RUN cd ${HOME} && \
     tar -xvf aanet.tar.gz && \
     rm -rf aanet.tar.gz
+ENV AADIR="${HOME}/aanet"
+ENV KM3NET_DATAFORMAT="${AADIR}/externals/km3net-dataformat"
+COPY kernel-aanet/ ${HOME}/.local/share/jupyter/kernels/kernel-aanet
 
 RUN /bin/bash -c "source ${ROOTSYS}/bin/thisroot.sh && \
     cd ${HOME}/aanet && \
@@ -95,6 +98,7 @@ RUN /bin/bash -c "source ${ROOTSYS}/bin/thisroot.sh && \
     python3.6 ./make.py"
 
 RUN echo "source ${HOME}/aanet/setenv.sh" >> ~/.bashrc 
+COPY Start-notebook.ipynb ${HOME}
 
 WORKDIR ${HOME}
 
