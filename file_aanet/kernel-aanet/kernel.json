@@ -1,0 +1,24 @@
+{
+    "argv": [
+     "python3",
+     "-m",
+     "ipykernel_launcher",
+     "-f",
+     "{connection_file}"
+    ],
+    "display_name": "Aanet (ipykernel)",
+    "language": "python",
+    "metadata": {
+     "debugger": true
+    },
+    "env": {
+        "HOME":"/home/your_user",
+        "ROOTSYS":"${HOME}/root_6.22.08-install",
+        "AADIR":"${HOME}/aanet",
+        "PATH":"${PATH}:${ROOTSYS}/bin:${AADIR}:${AADIR}/apps",
+        "PYTHONPATH":"${ROOTSYS}/lib:${AADIR}",
+        "KM3NET_DATAFORMAT":"${AADIR}/externals/km3net-dataformat",
+        "LD_LIBRARY_PATH":"${ROOTSYS}/lib:${KM3NET_DATAFORMAT}/lib:${AADIR}/lib",
+        "ROOT_INCLUDE_PATH":"${AADIR}/rec:${AADIR}/astro:${AADIR}/evt:${KM3NET_DATAFORMAT}/offline:${KM3NET_DATAFORMAT}/online" 
+    }
+}

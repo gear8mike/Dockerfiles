@@ -1,0 +1,1 @@
+Dockerfile for REANA is based on python-slim image.
