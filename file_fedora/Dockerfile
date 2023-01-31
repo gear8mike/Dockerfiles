@@ -1,0 +1,17 @@
+FROM fedora:38
+
+ENV SHELL /bin/bash
+
+ARG NB_USER=msmirnov
+ARG NB_UID=1000
+ENV USER ${NB_USER}
+ENV NB_UID ${NB_UID}
+ENV HOME /home/${NB_USER}
+
+USER root
+ENV PATH=$PATH:${HOME}/.local/bin
+
+USER ${NB_USER}
+
+
+WORKDIR ${HOME}
