@@ -1,0 +1,16 @@
+name: comb_km3net_cta_env
+channels:
+  - default
+  - conda-forge
+dependencies:
+  - python=3.8
+  - ipython
+  - astropy 
+  - gammapy=0.17
+  - pandas
+  - pip
+  - pip:
+      - km3io 
+      - km3pipe 
+      - km3irf
+      - naima
