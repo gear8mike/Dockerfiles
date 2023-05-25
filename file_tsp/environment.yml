@@ -14,5 +14,6 @@ dependencies:
       - km3io 
       - km3pipe 
       - km3irf
+      - matplotlib==3.2.1
       - naima==0.9.1
       - regions==0.4
