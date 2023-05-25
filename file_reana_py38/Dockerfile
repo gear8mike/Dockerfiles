@@ -1,7 +1,7 @@
 FROM python:3.8-slim
 
 # Set the working directory
-WORKDIR /app
+# WORKDIR /app
 
 # Install system dependencies
 RUN apt-get update && \
@@ -20,4 +20,4 @@ RUN pip install --no-cache-dir --user Cython==0.29.32 numpy==1.21.6 && \
     pip install --no-cache-dir --user -r requirements.txt
 
 # Set the entrypoint to the bash shell
-CMD ["/bin/bash"]
+# CMD ["/bin/bash"]
