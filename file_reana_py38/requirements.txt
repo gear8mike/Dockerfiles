@@ -6,7 +6,7 @@ regions>=0.4,<=0.5
 pandas==1.3.5
 uproot<5.0
 naima
-iminuit
+iminuit==1.5.4
 ipython
 ipykernel
 tqdm
